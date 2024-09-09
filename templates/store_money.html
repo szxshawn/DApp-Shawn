@@ -105,9 +105,11 @@
         <button class="btn" onclick="getValue()">Get Stored Value</button>
         <p id="storedValue"></p>
         <p id="status"></p>
-        <form action="/" method="post">
+        <form action="/main" method="post">
             <input type="submit" value="Main">
         </form>
+        <!-- 添加Logout链接 -->
+        <p><a href="/" class="logout-link">Logout</a></p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
