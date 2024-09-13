@@ -33,10 +33,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.2);
             max-width: 500px;
             width: 100%;
+            height: 80vh; /* 限制容器高度 */
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
+            overflow-y: auto; /* 添加垂直滚动条 */
         }
 
         h2 {
@@ -55,6 +57,7 @@
             text-align: center;
             margin-top: 20px;
             color: #ddd;
+            flex-grow: 1; /* 让用户列表占据剩余空间 */
         }
 
         .user-list ul {
@@ -77,13 +80,13 @@
 
         .btn-group {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
+            flex-direction: column; /* 调整为上下排列 */
+            justify-content: center;
+            margin-bottom: 20px; /* 增加与内容之间的间距 */
         }
 
         input[type="submit"], button {
-            width: 100%; /* 将宽度设置为 100%，使按钮占满容器宽度 */
+            width: 100%; /* 设置按钮宽度为100% */
             padding: 12px 24px;
             margin-top: 20px;
             border-radius: 10px;
@@ -130,12 +133,33 @@
             input, button {
                 font-size: 14px;
             }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type="submit"], button {
+                width: 100%; /* 全宽按钮 */
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>User Data and Login History</h2>
+
+        <!-- 将按钮放在 h2 下方 -->
+        <div class="btn-group">
+            <form action="/main" method="post">
+                <input type="submit" value="Main" class="main-button"> <!-- Main 按钮使用绿色渐变 -->
+            </form>
+
+            <form action="/admin" method="post">
+                <input type="submit" value="Back to Admin" class="back-button"> <!-- Back to Admin 按钮使用蓝色渐变 -->
+            </form>
+        </div>
 
         <!-- 显示用户数据 -->
         <div class="user-list">
@@ -155,17 +179,6 @@
             {% else %}
             <p>No users found in the database.</p>
             {% endif %}
-        </div>
-
-        <!-- 将按钮放在容器内的底部，且垂直排列并居中 -->
-        <div class="btn-group">
-            <form action="/main" method="post">
-                <input type="submit" value="Main" class="main-button"> <!-- Main 按钮使用绿色渐变 -->
-            </form>
-
-            <form action="/admin" method="post">
-                <input type="submit" value="Back to Admin" class="back-button"> <!-- Back to Admin 按钮使用蓝色渐变 -->
-            </form>
         </div>
     </div>
 </body>
