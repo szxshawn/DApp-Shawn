@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Ethereum DApp 5 - Register</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -27,7 +28,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        .register-container {
+        .container {
             background-color: rgba(43, 43, 43, 0.9);
             padding: 40px;
             border-radius: 15px;
@@ -37,10 +38,9 @@
             text-align: center;
             border: 1px solid #444;
             backdrop-filter: blur(10px);
-            z-index: 2;
         }
 
-        .register-container h2 {
+        h2 {
             font-size: 26px;
             margin-bottom: 20px;
             color: #fff;
@@ -51,9 +51,13 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .form-group {
+            position: relative;
+        }
+
         .form-group input {
             background-color: rgba(61, 61, 61, 0.8);
-            color: #fff; /* 保证文字颜色为白色 */
+            color: #fff;
             border: none;
             padding: 12px 20px;
             border-radius: 8px;
@@ -69,19 +73,13 @@
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
-        /* 修复浏览器自动填充样式问题 */
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
-        textarea:-webkit-autofill, 
-        textarea:-webkit-autofill:hover, 
-        textarea:-webkit-autofill:focus, 
-        select:-webkit-autofill, 
-        select:-webkit-autofill:hover, 
-        select:-webkit-autofill:focus {
-            -webkit-box-shadow: 0 0 0 1000px rgba(61, 61, 61, 0.8) inset !important; /* 保持背景颜色一致 */
-            -webkit-text-fill-color: #fff !important; /* 保持文字颜色为白色 */
-            transition: background-color 5000s ease-in-out 0s;
+        .form-group .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
         }
 
         button {
@@ -133,8 +131,33 @@
             text-decoration: underline;
         }
 
+        .register-container {
+            position: relative;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            border: 10px solid rgba(255, 0, 255, 0.6);
+            border-radius: 50%;
+            animation: rotate 12s infinite linear;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         @media (max-width: 768px) {
-            .register-container {
+            .container {
                 padding: 20px;
             }
 
@@ -142,7 +165,7 @@
                 font-size: 22px;
             }
 
-            .form-group input, button {
+            input, button {
                 font-size: 14px;
             }
 
@@ -152,33 +175,47 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="register-container">
+    <div class="container">
         <h2>Register</h2>
         <!-- 显示消息框 -->
         {% if message %}
-        <div id="message-box" class="show">{{ message }}</div>
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
         {% endif %}
 
-        <form method="post" action="/register">
-            <div class="form-group">
-                <label for="wallet_address">User Name:</label>
-                <input type="text" class="form-control" name="wallet_address" id="wallet_address" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-
-        <!-- 返回登录页面的链接 -->
-        <a href="/" class="login-link">Already have an account? Login</a>
+        <!-- 注册功能 -->
+        <div class="register-container">
+            <form method="post" action="/register">
+                <div class="form-group">
+                    <input type="text" name="wallet_address" id="wallet_address" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <!-- 登录链接 -->
+            <a href="/" class="login-link">Already have an account? Login</a>
+        </div>
     </div>
 
     <!-- 引入Bootstrap的JavaScript库 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        }
+    </script>
 </body>
 </html>
