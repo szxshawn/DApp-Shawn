@@ -8,83 +8,118 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(270deg, #ff5edf, #04c8de, #a29bfe);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            background-color: rgba(30, 30, 30, 0.85);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.2);
+            max-width: 420px;
             width: 100%;
             text-align: center;
+            border: 1px solid #333;
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 2;
         }
 
         h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #ff0000, #e52e71); /* Red gradient for Admin */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        form {
-            margin: 15px 0;
-        }
-
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: white;
+        input[type="submit"], button {
+            width: calc(100% - 40px);
             padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #007bff;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(61, 61, 61, 0.5);
+            background-color: rgba(61, 61, 61, 0.8);
             color: white;
-            border: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.4), 0 0 30px rgba(255, 0, 255, 0.4);
+        }
+
+        input[type="submit"]:hover, button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Special styling for Delete Database button */
+        .delete-button {
+            background: linear-gradient(45deg, #ff0000, #ff6347); /* Red gradient */
+        }
+
+        /* Special styling for Main button */
+        .main-button {
+            background: linear-gradient(45deg, #00b894, #55efc4); /* Green gradient */
+            width: calc(50% - 20px); /* 设置为其他按钮宽度的 50% */
+            padding: 12px 24px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(61, 61, 61, 0.5);
+            color: white;
+            font-size: 16px;
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.4), 0 0 30px rgba(255, 0, 255, 0.4);
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .main-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(85, 239, 196, 0.4);
         }
-
 
         p {
             margin-top: 20px;
             font-size: 18px;
-            color: #007bff;
+            color: #00c0ff;
+        }
+
+        .logout-link {
+            color: #00c0ff;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            color: #ff5edf;
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 30px;
             }
 
             h2 {
-                font-size: 20px;
+                font-size: 24px;
             }
 
             input, button {
@@ -100,24 +135,16 @@
 <body>
     <div class="container">
         <h2>Admin</h2>
-        <br>
-        <form action = "/viewDB" method="post">
+        <form action="/viewDB" method="post">
             <input type="submit" value="View Database">
         </form>
-        <br>
-        <form action = "/delDB" method="post">
-            <input type="submit" value="Delete Database">
+        <form action="/delDB" method="post">
+            <input type="submit" value="Delete Database" class="delete-button">
         </form>
-        <br>
-        <form action = "/main" method="post">
-            <input type="submit" value="Main">
+        <form action="/main" method="post">
+            <input type="submit" value="Main" class="main-button">
         </form>
-        <br>
-        <!-- 添加Logout链接 -->
         <p><a href="/" class="logout-link">Logout</a></p>
     </div>
 </body>
 </html>
-
-
-
